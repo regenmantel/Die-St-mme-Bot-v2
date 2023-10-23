@@ -1,8 +1,15 @@
 (async () => {
-    const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js");
+    const {Client, GatewayIntentBits, Partials, Collection} = require("discord.js");
     const credentialManager = require("./communityDiscordBot/Src/Credentials/Config");
-    const dirPath = __dirname+"/communityDiscordBot";
-    const { messageCommandsManager, eventsManager, buttonManager, selectMenuManager, modalFormsManager, slashCommandsManager } = require("./communityDiscordBot/Src/Structures/Managers/Export");
+    const dirPath = __dirname + "/communityDiscordBot";
+    const {
+        messageCommandsManager,
+        eventsManager,
+        buttonManager,
+        selectMenuManager,
+        modalFormsManager,
+        slashCommandsManager
+    } = require("./communityDiscordBot/Src/Structures/Managers/Export");
     const botClient = new Client({
         intents: [
             GatewayIntentBits.Guilds,
@@ -24,12 +31,15 @@
     let logger = new (winston.createLogger)({
         transports: [
             new (winston.transports.Console)(),
-            new (winston.transports.File)({filename: 'StaemmeBotDiscordError.log', timestamp: true, /*maxsize: 5242880, maxFiles: 100*/})
+            new (winston.transports.File)({
+                filename: 'StaemmeBotDiscordError.log',
+                timestamp: true, /*maxsize: 5242880, maxFiles: 100*/
+            })
         ]
     });
 
     botClient
-        .on("error",(error)=> {
+        .on("error", (error) => {
             let dateForException = new Date();
             let dateStr =
                 ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
@@ -38,9 +48,9 @@
                 ("00" + dateForException.getHours()).slice(-2) + ":" +
                 ("00" + dateForException.getMinutes()).slice(-2) + ":" +
                 ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('discordBotError ' + dateStr + ' :', {message: error});
+            logger.error('error ' + dateStr + ' :', {message: error});
         })
-        .on("debug", (error)=> {
+        .on("debug", (error) => {
             let dateForException = new Date();
             let dateStr =
                 ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
@@ -51,7 +61,7 @@
                 ("00" + dateForException.getSeconds()).slice(-2);
             logger.error('debug ' + dateStr + ' :', {message: error});
         })
-        .on("warn", (error)=> {
+        .on("warn", (error) => {
             let dateForException = new Date();
             let dateStr =
                 ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
@@ -60,7 +70,51 @@
                 ("00" + dateForException.getHours()).slice(-2) + ":" +
                 ("00" + dateForException.getMinutes()).slice(-2) + ":" +
                 ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('discordBotWarn ' + dateStr + ' :', {message: error});
+            logger.error('warn ' + dateStr + ' :', {message: error});
+        })
+        .on("disconnect", (error) => {
+            let dateForException = new Date();
+            let dateStr =
+                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
+                ("00" + dateForException.getDate()).slice(-2) + "/" +
+                dateForException.getFullYear() + " " +
+                ("00" + dateForException.getHours()).slice(-2) + ":" +
+                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
+                ("00" + dateForException.getSeconds()).slice(-2);
+            logger.error('disconnect ' + dateStr + ' :', {message: error});
+        })
+        .on("rateLimit", (error) => {
+            let dateForException = new Date();
+            let dateStr =
+                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
+                ("00" + dateForException.getDate()).slice(-2) + "/" +
+                dateForException.getFullYear() + " " +
+                ("00" + dateForException.getHours()).slice(-2) + ":" +
+                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
+                ("00" + dateForException.getSeconds()).slice(-2);
+            logger.error('rateLimit ' + dateStr + ' :', {message: error});
+        })
+        .on("reconnecting", (error) => {
+            let dateForException = new Date();
+            let dateStr =
+                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
+                ("00" + dateForException.getDate()).slice(-2) + "/" +
+                dateForException.getFullYear() + " " +
+                ("00" + dateForException.getHours()).slice(-2) + ":" +
+                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
+                ("00" + dateForException.getSeconds()).slice(-2);
+            logger.error('reconnecting ' + dateStr + ' :', {message: error});
+        })
+        .on("resume", (error) => {
+            let dateForException = new Date();
+            let dateStr =
+                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
+                ("00" + dateForException.getDate()).slice(-2) + "/" +
+                dateForException.getFullYear() + " " +
+                ("00" + dateForException.getHours()).slice(-2) + ":" +
+                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
+                ("00" + dateForException.getSeconds()).slice(-2);
+            logger.error('resume ' + dateStr + ' :', {message: error});
         })
 
 
