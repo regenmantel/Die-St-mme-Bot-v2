@@ -19,12 +19,10 @@
     "hall": "nodemon hallofbot.js"
   },
   "dependencies": {
-    "@discordjs/rest": "^2.0.1",
-    "@discordjs/ws": "^1.0.1",
     "axios": "^0.26.1",
     "canvas": "^2.9.1",
     "canvas2image": "^1.0.5",
-    "discord.js": "^14.12.1",
+    "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.6",
     "graceful-fs": "^4.2.10",
