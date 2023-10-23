@@ -39,17 +39,6 @@
     });
 
     botClient
-        .on("error", (error) => {
-            let dateForException = new Date();
-            let dateStr =
-                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
-                ("00" + dateForException.getDate()).slice(-2) + "/" +
-                dateForException.getFullYear() + " " +
-                ("00" + dateForException.getHours()).slice(-2) + ":" +
-                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
-                ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('error ' + dateStr + ' :', {message: error});
-        })
         .on("debug", (error) => {
             let dateForException = new Date();
             let dateStr =
