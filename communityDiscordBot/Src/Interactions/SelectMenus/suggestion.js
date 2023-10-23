@@ -35,20 +35,20 @@ module.exports = {
         let user;
         let messageContent = "";
         let guildUser;
-        if(!message){
-            let userID = interaction.message.embeds[0].fields[0].value.replace("<@","");
-            userID = userID.replace(">","");
+        if (!message) {
+            let userID = interaction.message.embeds[0].fields[0].value.replace("<@", "");
+            userID = userID.replace(">", "");
             user = await client.users.fetch(userID, false);
             messageContent = interaction.message.embeds[0].fields[3].value;
             guildUser = await interaction.guild.members.cache.get(userID)
 
-        }else{
+        } else {
             guildUser = await interaction.guild.members.cache.get(message.author.id)
             user = message.author
             messageContent = message.content;
-            if(message.attachments){
+            if (message.attachments) {
                 messageContent += `\n Anhang:`
-                message.attachments.forEach((attachment)=>{
+                message.attachments.forEach((attachment) => {
                     messageContent += `\n${attachment.url}`
                 })
             }
@@ -132,13 +132,13 @@ module.exports = {
                 response = "Timeout 1h";
                 warningPoints = 0;
                 expiryDate = 30;
-                await guildUser.timeout(1000*60*60)
+                await guildUser.timeout(1000 * 60 * 60)
                 break;
             case 14:
                 response = "Timeout 12h";
                 warningPoints = 0;
                 expiryDate = 30;
-                await guildUser.timeout(1000*60*60*12)
+                await guildUser.timeout(1000 * 60 * 60 * 12)
                 break;
         }
 
@@ -157,9 +157,7 @@ module.exports = {
                 )
             ]
         });
-        console.log(user)
-        const warnMessage = new EmbedBuilder();
-        warnMessage
+        const warnMessage = new EmbedBuilder()
             .setTitle(`Die Stämme Discord Bot - Verwarnung`)
             .setAuthor({
                 name: 'Die Stämme Discord Profil',
@@ -179,8 +177,7 @@ module.exports = {
 
         await refreshWarningPoints(user.id);
 
-        const userPN = new EmbedBuilder();
-        userPN
+        const userPN = new EmbedBuilder()
             .setTitle(`Die Stämme Discord Bot - Verwarnung`)
             .setAuthor({
                 name: 'Die Stämme Discord Profil',
@@ -191,9 +188,10 @@ module.exports = {
             .setTimestamp()
             .setColor(0xED3D7D);
 
-        client.channels.fetch(channelID).then(channel => {
-            channel.messages.delete(messageID);
-        });
+
+        if(message){
+            await message.delete();
+        }
 
         await user.send({
             embeds: [userPN]

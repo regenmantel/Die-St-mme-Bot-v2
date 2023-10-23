@@ -7,6 +7,7 @@ const {conn} = require("../functions/conn");
 module.exports = {
     name: "messageCreate",
     run: async (message, client) => {
+        if(!message) return;
         await insultFilter.run(client, message);
         await activityPoints.run(client, message);
         if(!message.author.bot){

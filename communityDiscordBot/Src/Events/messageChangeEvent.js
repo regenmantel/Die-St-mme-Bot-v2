@@ -12,10 +12,7 @@ module.exports = {
             } catch (error) {
                 return;
             }
-        }else{
-            oldMessage = await oldMessage.fetch();
         }
-
         if (newMessage.partial) {
             try {
                 await newMessage.fetch();
@@ -23,6 +20,9 @@ module.exports = {
                 return;
             }
         }
+
+        if(!oldMessage || !newMessage) return;
+
         let currentTime = Math.round(Date.now() / 1000);
 
         if (!oldMessage.author.bot) {

@@ -109,8 +109,7 @@ module.exports = {
 
         await refreshWarningPoints(user.id);
 
-        const userPN = new EmbedBuilder();
-        userPN
+        const userPN = new EmbedBuilder()
             .setTitle(`Die Stämme Discord Bot - Verwarnung`)
             .setAuthor({
                 name: 'Die Stämme Discord Profil',
@@ -121,9 +120,7 @@ module.exports = {
             .setTimestamp()
             .setColor(0xED3D7D);
         if (message) {
-            client.channels.fetch(channelID).then(channel => {
-                channel.messages.delete(messageID);
-            });
+            await message.delete();
         }
         try {
             await user.send({

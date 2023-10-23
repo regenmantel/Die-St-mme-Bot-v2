@@ -24,6 +24,12 @@ module.exports = {
             })
             return;
         }
+        talkedRecently.add(interaction.user.id);
+        setTimeout(() => {
+            // Removes the user from the set after a minute
+            talkedRecently.delete(interaction.user.id);
+        }, 60000*5);
+
         const ticketChannel = interaction.guild.channels.cache.get(config.server.channels.ticketChannelId);
         const currentTicketId = await conn('SELECT MAX(ticketId) FROM `tickets`');
         
@@ -47,9 +53,8 @@ module.exports = {
             ],
         });
 
-        const newChannel = new EmbedBuilder();
-            newChannel
-                .setTitle('Die Stämme Discord Ticket System')
+        const newChannel = new EmbedBuilder()
+            .setTitle('Die Stämme Discord Ticket System')
                 .setAuthor({
                     name: `Ticket ${inlineCode(channelName)} von ${interaction.user.username}`,
                     iconURL: `${interaction.guild.iconURL()}`
@@ -85,11 +90,5 @@ module.exports = {
         let newTicketAmount = oldTicketAmount + 1;
 
         await conn('UPDATE `users` SET ticketAmount = ? WHERE discordUserId = ?', [newTicketAmount, interaction.user.id]);
-
-        talkedRecently.add(interaction.user.id);
-        setTimeout(() => {
-            // Removes the user from the set after a minute
-            talkedRecently.delete(interaction.user.id);
-        }, 60000*5);
     }
 };

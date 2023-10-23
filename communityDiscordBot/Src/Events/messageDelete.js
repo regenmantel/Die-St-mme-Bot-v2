@@ -5,6 +5,7 @@ const {EmbedBuilder, inlineCode, userMention, time, channelMention} = require("d
 module.exports = {
     name: 'messageDelete',
     run: async (message, client) => {
+        if(!message) return;
         const deleteMessageChannel = client.channels.cache.find(channel => channel.id === config.server.channels.deleteMessageChannelID);
         if (message.partial) {
             // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled

@@ -67,8 +67,7 @@ module.exports = {
             await ticketChannel.send(`:closed_lock_with_key: · Das Ticket ${inlineCode(channel.name)} wurde geschlossen von ${interaction.user} ➙ Archiviert: <#${channel.id}>`);
 
 
-            const userPN = new EmbedBuilder();
-            userPN
+            const userPN = new EmbedBuilder()
                 .setTitle(`Die Stämme Discord Bot - Ticket ID#${ticketId}`)
                 .setAuthor({
                     name: 'Die Stämme Discord Profil',

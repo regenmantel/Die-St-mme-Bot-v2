@@ -19,9 +19,13 @@ module.exports = {
             messageID = match[2];
         }
 
-        client.channels.fetch(channelID).then(channel => {
-            channel.messages.delete(messageID);
-        });
+        const channel = await client.channels.cache.get(channelID);
+        const message = await channel.messages.cache.get(messageID);
+
+        if(!message){
+            await message.delete()
+        }
+
 
         await interaction.message.edit({
             components: [

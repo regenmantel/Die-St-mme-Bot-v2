@@ -94,7 +94,7 @@ module.exports = {
             let reason = interaction.options.getString('reason');
             let warningPoints = interaction.options.getInteger('points');
             let messageLink = interaction.options.getString('messagelink');
-            if(messageLink){
+            if (messageLink) {
                 const regex = /https:\/\/discord\.com\/channels\/\d+\/(\d+)\/(\d+)/g;
                 let match, channelID, messageID;
 
@@ -121,8 +121,9 @@ module.exports = {
                                 i++;
                             })
                         }
-
-                        message.delete()
+                        if(message){
+                            message.delete()
+                        }
                     })
                     .catch();
             }
@@ -133,8 +134,7 @@ module.exports = {
             let expiryDate = parseInt(interaction.options.getInteger('timeindays'));
             let expiryTime = warningTime + (expiryDate * 86400);
 
-            const warnMessage = new EmbedBuilder();
-            warnMessage
+            const warnMessage = new EmbedBuilder
                 .setTitle(`Die Stämme Discord Bot - Verwarnung`)
                 .setAuthor({
                     name: 'Die Stämme Discord Profil',
@@ -149,12 +149,11 @@ module.exports = {
                 embeds: [warnMessage]
             });
 
-            await conn('INSERT INTO `warningPoints` (discordUserID,warningPoints,warningPerson,warningTime,reason,expiryDate,message) VALUES (?,?,?,?,?,?,?)', [discordUserId, warningPoints, warningPerson, warningTime, reason, expiryTime,messageUser]);
+            await conn('INSERT INTO `warningPoints` (discordUserID,warningPoints,warningPerson,warningTime,reason,expiryDate,message) VALUES (?,?,?,?,?,?,?)', [discordUserId, warningPoints, warningPerson, warningTime, reason, expiryTime, messageUser]);
 
             await refreshWarningPoints(discordUserId);
 
-            const userPN = new EmbedBuilder();
-            userPN
+            const userPN = new EmbedBuilder()
                 .setTitle(`Die Stämme Discord Bot - Verwarnung`)
                 .setAuthor({
                     name: 'Die Stämme Discord Profil',
@@ -169,7 +168,7 @@ module.exports = {
                 await user.send({
                     embeds: [userPN]
                 });
-            }catch (e) {
+            } catch (e) {
 
             }
 
@@ -359,8 +358,8 @@ module.exports = {
                 });
             } else {
                 result = `Verwarnung mit der ${inlineCode(warnID)} wurde gelöscht von ${inlineCode(interaction.user.username)}.`;
-                let currentTime = Math.round(Date.now()/1000);
-                await conn('UPDATE `warningPoints` SET warningPoints = 0,deleteUser = ?,deleteTime = ? WHERE ID = ?', [interaction.user.id,currentTime,warningID]);
+                let currentTime = Math.round(Date.now() / 1000);
+                await conn('UPDATE `warningPoints` SET warningPoints = 0,deleteUser = ?,deleteTime = ? WHERE ID = ?', [interaction.user.id, currentTime, warningID]);
                 await refreshWarningPoints(checkId[0]["discordUserID"]);
                 await interaction.reply({
                     content: `Verwarnung mit der ${inlineCode(warnID)} wurde gelöscht.`,
