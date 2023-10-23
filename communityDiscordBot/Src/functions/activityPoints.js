@@ -1,6 +1,6 @@
 const config = require('../Credentials/Config');
 const cooldownDuration = 60000; // 60 Sek
-const cooldowns = {}; 
+const cooldowns = {};
 const {conn} = require("./conn");
 
 const {
