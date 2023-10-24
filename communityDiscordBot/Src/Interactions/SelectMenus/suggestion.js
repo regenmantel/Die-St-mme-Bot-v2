@@ -190,7 +190,7 @@ module.exports = {
 
 
         if(message){
-            await message.delete();
+            await message.delete().catch(error => {});
         }
 
         await user.send({

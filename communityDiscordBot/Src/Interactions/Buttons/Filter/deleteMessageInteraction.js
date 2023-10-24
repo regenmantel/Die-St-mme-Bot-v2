@@ -23,7 +23,7 @@ module.exports = {
         const message = await channel.messages.cache.get(messageID);
 
         if(!message){
-            await message.delete()
+            await message.delete().catch(error => {})
         }
 
 

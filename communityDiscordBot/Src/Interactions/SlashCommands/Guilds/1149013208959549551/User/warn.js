@@ -122,7 +122,7 @@ module.exports = {
                             })
                         }
                         if(message){
-                            message.delete()
+                            message.delete().catch(error => {});
                         }
                     })
                     .catch();

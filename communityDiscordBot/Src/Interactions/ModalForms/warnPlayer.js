@@ -120,7 +120,7 @@ module.exports = {
             .setTimestamp()
             .setColor(0xED3D7D);
         if (message) {
-            await message.delete();
+            await message.delete().catch(error => {});
         }
         try {
             await user.send({
