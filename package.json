@@ -4,7 +4,7 @@
   "description": "Datenbank Bot",
   "scripts": {
     "start": "node src/index.js",
-    "tribalWarsDiscord": "node communityBot.js",
+    "tribalWarsDiscord": "nodemon communityBot.js",
     "test": "nodemon testbot.js",
     "testt": "nodemon src/testindex.js",
     "weltendiscord": "node src/weltendc.js",

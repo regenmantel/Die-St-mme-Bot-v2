@@ -54,7 +54,7 @@ module.exports = {
                 interaction.message.edit({
                         content: "",
                         embeds: [
-                            new EmbedBuilder()
+                            await new EmbedBuilder()
                                 .setTitle(inlineCode(questionArray[questionID][0]))
                                 .setAuthor({
                                     name: 'Quizmaster',

@@ -134,7 +134,7 @@ module.exports = {
             let expiryDate = parseInt(interaction.options.getInteger('timeindays'));
             let expiryTime = warningTime + (expiryDate * 86400);
 
-            const warnMessage = new EmbedBuilder
+            const warnMessage = new EmbedBuilder()
                 .setTitle(`Die Stämme Discord Bot - Verwarnung`)
                 .setAuthor({
                     name: 'Die Stämme Discord Profil',

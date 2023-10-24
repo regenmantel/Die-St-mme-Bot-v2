@@ -20,8 +20,7 @@ module.exports = {
     run: async (client, interaction) => {
         const supportLink = "https://support.innogames.com/kb/staemme/de_DE";
 
-        const ticketMsg = new EmbedBuilder();
-            ticketMsg
+        const ticketMsg = new EmbedBuilder()
                 .setTitle('Für In-Game Support klicke hier.')
                 .setURL(supportLink)
                 .setAuthor({

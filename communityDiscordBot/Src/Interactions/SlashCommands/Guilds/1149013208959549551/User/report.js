@@ -82,7 +82,7 @@ module.exports = {
                             })
                         }
 
-                        newReport
+                        await newReport
                             .setTitle(`Reportmeldung von ${interaction.user.username}`)
                             .setThumbnail(message.author.displayAvatarURL({dynamic: true, format: 'png', size: 1024}))
                             .addFields([

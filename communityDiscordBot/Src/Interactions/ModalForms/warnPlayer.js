@@ -86,10 +86,8 @@ module.exports = {
                 )
             ]
         });
-
-
-        const warnMessage = new EmbedBuilder();
-        warnMessage
+        
+        const warnMessage = new EmbedBuilder()
             .setTitle(`Die Stämme Discord Bot - Verwarnung`)
             .setAuthor({
                 name: 'Die Stämme Discord Profil',

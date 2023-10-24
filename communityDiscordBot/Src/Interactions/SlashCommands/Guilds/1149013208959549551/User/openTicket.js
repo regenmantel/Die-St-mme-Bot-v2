@@ -66,8 +66,7 @@ module.exports = {
             });
 
 
-            const newChannel = new EmbedBuilder();
-            newChannel
+            const newChannel = new EmbedBuilder()
                 .setTitle('Die Stämme Discord Ticket System')
                 .setAuthor({
                     name: `Ticket ${inlineCode(channelName)} von ${interaction.user.username}`,
