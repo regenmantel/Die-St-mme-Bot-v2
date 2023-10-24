@@ -22,10 +22,9 @@ module.exports = {
         const channel = await client.channels.cache.get(channelID);
         const message = await channel.messages.cache.get(messageID);
 
-        if(!message){
-            await message.delete().catch(error => {})
+        if(message){
+            await message.delete().catch(error => {console.log(error)})
         }
-
 
         await interaction.message.edit({
             components: [

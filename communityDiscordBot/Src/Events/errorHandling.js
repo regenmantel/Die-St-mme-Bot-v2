@@ -3,6 +3,7 @@ const winston = require("winston");
 module.exports = {
     name: 'error',
     run: async (error) => {
+        console.log(error)
         let logger = new (winston.createLogger)({
             transports: [
                 new (winston.transports.Console)(),
@@ -17,6 +18,6 @@ module.exports = {
             ("00" + dateForException.getHours()).slice(-2) + ":" +
             ("00" + dateForException.getMinutes()).slice(-2) + ":" +
             ("00" + dateForException.getSeconds()).slice(-2);
-        logger.error('discordBotError ' + dateStr + ' :', {message: error});
+        logger.error('discordBotError ' + dateStr + ' :', {message: error.message, stack: error.stack});
     },
 };
