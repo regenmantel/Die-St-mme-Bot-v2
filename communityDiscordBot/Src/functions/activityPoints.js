@@ -29,11 +29,8 @@ module.exports = {
             const pointsQuery = await conn('SELECT activityPoints FROM `users` WHERE discordUserId = ?', [message.author.id])
             let points = pointsQuery.length ? pointsQuery[0]['activityPoints'] : 0;
             points += 1;
-            if(userId == "305088552751071233") {
-                console.log(points)
-            }
 
-            if (points >= 1 && points < 25) {
+            if (points >= 2 && points < 25) {
                 level = 'Speerträger (Level 1)';
                 removeRole = config.server.activity.spaeher;
                 addRole = config.server.activity.speertraeger;

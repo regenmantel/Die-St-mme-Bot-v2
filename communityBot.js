@@ -48,7 +48,7 @@
                 ("00" + dateForException.getHours()).slice(-2) + ":" +
                 ("00" + dateForException.getMinutes()).slice(-2) + ":" +
                 ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('error ' + dateStr + ' :', {message: error});
+            //logger.error('debug ' + dateStr + ' :', {message: error});
         })
         .on("debug", (error) => {
             let dateForException = new Date();
@@ -59,7 +59,7 @@
                 ("00" + dateForException.getHours()).slice(-2) + ":" +
                 ("00" + dateForException.getMinutes()).slice(-2) + ":" +
                 ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('debug ' + dateStr + ' :', {message: error});
+            //logger.error('debug ' + dateStr + ' :', {message: error});
         })
         .on("warn", (error) => {
             let dateForException = new Date();
