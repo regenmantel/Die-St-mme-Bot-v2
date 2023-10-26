@@ -5,18 +5,17 @@
   "scripts": {
     "start": "node src/index.js",
     "tribalWarsDiscord": "node communityBot.js",
-    "test": "nodemon testbot.js",
-    "testt": "nodemon src/testindex.js",
+    "test": "nodemon dataBaseBot.js",
+    "test2": "nodemon testbot.js",
     "weltendiscord": "node src/weltendc.js",
-    "cronjob": "node src/cronjob.js",
-    "cronjob2": "node src/cronjob2.js",
     "createNewWorlds": "node communityDiscordBot/Src/cronjobs/createNewWorlds.js",
     "birthdayWishes": "node communityDiscordBot/Src/cronjobs/sendBirthdayWishes.js",
     "leaderboard": "node communityDiscordBot/Src/cronjobs/leaderboard.js",
     "checkForum": "node communityDiscordBot/Src/cronjobs/catchForumInformations.js",
     "banUser": "node communityDiscordBot/Src/cronjobs/banNewUser.js",
     "testFix": "node communityDiscordBot/Src/cronjobs/fixReactions.js",
-    "hall": "nodemon hallofbot.js"
+    "hall": "node hallofbot.js",
+    "hallOfBash": "node HallOfBash/Src/cronjobs/sendHallOfBash.js"
   },
   "dependencies": {
     "axios": "^0.26.1",

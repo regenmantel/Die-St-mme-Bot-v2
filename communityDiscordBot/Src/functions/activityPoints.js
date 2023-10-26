@@ -30,7 +30,7 @@ module.exports = {
             let points = pointsQuery.length ? pointsQuery[0]['activityPoints'] : 0;
             points += 1;
 
-            if (points >= 2 && points < 25) {
+            if (points > 0 && points < 25) {
                 level = 'Speerträger (Level 1)';
                 removeRole = config.server.activity.spaeher;
                 addRole = config.server.activity.speertraeger;
