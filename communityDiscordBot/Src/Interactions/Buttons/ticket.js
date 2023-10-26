@@ -52,7 +52,9 @@ module.exports = {
                 }
             ],
         });
-        interaction.deferReply()
+        interaction.deferReply({
+            ephemeral: true
+        })
         const newChannel = new EmbedBuilder()
             .setTitle('Die Stämme Discord Ticket System')
             .setAuthor({
