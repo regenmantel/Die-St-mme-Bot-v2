@@ -35,7 +35,7 @@ module.exports = {
 
         let maxTicketId = currentTicketId[0]['MAX(ticketId)'];
         let newTicketId = maxTicketId + 1;
-        interaction.deferUpdate();
+
         const channelName = `${newTicketId.toString().padStart(4, '0')}-dssupport`;
         const channel = await interaction.guild.channels.create({
             name: channelName,
@@ -52,7 +52,7 @@ module.exports = {
                 }
             ],
         });
-
+        interaction.deferReply()
         const newChannel = new EmbedBuilder()
             .setTitle('Die Stämme Discord Ticket System')
             .setAuthor({
@@ -75,7 +75,6 @@ module.exports = {
             ],
             ephemeral: true
         });
-        interaction.deferUpdate();
         await ticketChannel.send(`🏷 Es wurde ein neues Ticket ${inlineCode(channelName)}  erstellt von ${interaction.user} ➙  <#${channel.id}>`)
         await conn('INSERT INTO `tickets` VALUES (?,?,?,?)', [newTicketId, interaction.user.id, channel.id, 0]);
 
@@ -83,7 +82,7 @@ module.exports = {
         const oldTicketAmount = ticketAmountOfCreatorId[0]['ticketAmount'];
         let newTicketAmount = oldTicketAmount + 1;
         await conn('UPDATE `users` SET ticketAmount = ? WHERE discordUserId = ?', [newTicketAmount, interaction.user.id]);
-        await interaction.reply({
+        await interaction.editReply({
             content: `🏷 Ein Ticket ${inlineCode(channelName)} wurde automatisch für dich hier erstellt ➙  <#${channel.id}>`,
             ephemeral: true
         });

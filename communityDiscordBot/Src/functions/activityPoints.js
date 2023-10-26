@@ -23,14 +23,14 @@ module.exports = {
         if (cooldowns[userId] && cooldowns[userId] > Date.now()) {
             return;
         } else {
+            await conn('UPDATE users SET activityPoints = activityPoints + 1 WHERE discordUserId = ?', [message.author.id]);
             cooldowns[userId] = Date.now() + cooldownDuration;
             let removeRole, addRole, level;
 
             const pointsQuery = await conn('SELECT activityPoints FROM `users` WHERE discordUserId = ?', [message.author.id])
             let points = pointsQuery.length ? pointsQuery[0]['activityPoints'] : 0;
-            points += 1;
 
-            if (points >= 2 && points < 25) {
+            if (points >= 1 && points < 25) {
                 level = 'Speerträger (Level 1)';
                 removeRole = config.server.activity.spaeher;
                 addRole = config.server.activity.speertraeger;
@@ -72,10 +72,10 @@ module.exports = {
                 addRole = config.server.activity.adelsgeschlecht;
             }
             if (removeRole && addRole && level) {
-                await conn('UPDATE users SET activityPoints = activityPoints + 1, level = ? WHERE discordUserId = ?', [level, message.author.id]);
                 try {
                     await message.member.roles.remove(message.member.guild.roles.cache.find(role => role.id === removeRole));
                     await message.member.roles.add(message.member.guild.roles.cache.find(role => role.id === addRole));
+                    await conn('UPDATE users SET level = ? WHERE discordUserId = ?', [level, message.author.id]);
                 } catch (e) {
 
                 }
