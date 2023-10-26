@@ -48,7 +48,7 @@
                 ("00" + dateForException.getHours()).slice(-2) + ":" +
                 ("00" + dateForException.getMinutes()).slice(-2) + ":" +
                 ("00" + dateForException.getSeconds()).slice(-2);
-            //logger.error('debug ' + dateStr + ' :', {message: error});
+            logger.error('errorDiscord ' + dateStr + ' :', {message: error.message, stack: error.stack});
         })
         .on("debug", (error) => {
             let dateForException = new Date();
@@ -59,7 +59,7 @@
                 ("00" + dateForException.getHours()).slice(-2) + ":" +
                 ("00" + dateForException.getMinutes()).slice(-2) + ":" +
                 ("00" + dateForException.getSeconds()).slice(-2);
-            //logger.error('debug ' + dateStr + ' :', {message: error});
+            logger.error('debugDiscord ' + dateStr + ' :', {message: error});
         })
         .on("warn", (error) => {
             let dateForException = new Date();
@@ -70,51 +70,7 @@
                 ("00" + dateForException.getHours()).slice(-2) + ":" +
                 ("00" + dateForException.getMinutes()).slice(-2) + ":" +
                 ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('warn ' + dateStr + ' :', {message: error});
-        })
-        .on("disconnect", (error) => {
-            let dateForException = new Date();
-            let dateStr =
-                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
-                ("00" + dateForException.getDate()).slice(-2) + "/" +
-                dateForException.getFullYear() + " " +
-                ("00" + dateForException.getHours()).slice(-2) + ":" +
-                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
-                ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('disconnect ' + dateStr + ' :', {message: error});
-        })
-        .on("rateLimit", (error) => {
-            let dateForException = new Date();
-            let dateStr =
-                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
-                ("00" + dateForException.getDate()).slice(-2) + "/" +
-                dateForException.getFullYear() + " " +
-                ("00" + dateForException.getHours()).slice(-2) + ":" +
-                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
-                ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('rateLimit ' + dateStr + ' :', {message: error});
-        })
-        .on("reconnecting", (error) => {
-            let dateForException = new Date();
-            let dateStr =
-                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
-                ("00" + dateForException.getDate()).slice(-2) + "/" +
-                dateForException.getFullYear() + " " +
-                ("00" + dateForException.getHours()).slice(-2) + ":" +
-                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
-                ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('reconnecting ' + dateStr + ' :', {message: error});
-        })
-        .on("resume", (error) => {
-            let dateForException = new Date();
-            let dateStr =
-                ("00" + (dateForException.getMonth() + 1)).slice(-2) + "/" +
-                ("00" + dateForException.getDate()).slice(-2) + "/" +
-                dateForException.getFullYear() + " " +
-                ("00" + dateForException.getHours()).slice(-2) + ":" +
-                ("00" + dateForException.getMinutes()).slice(-2) + ":" +
-                ("00" + dateForException.getSeconds()).slice(-2);
-            logger.error('resume ' + dateStr + ' :', {message: error});
+            logger.error('warnDiscord ' + dateStr + ' :', {message: error});
         })
 
 
