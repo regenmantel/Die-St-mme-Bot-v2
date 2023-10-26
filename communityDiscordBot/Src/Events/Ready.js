@@ -27,8 +27,9 @@ module.exports = {
             })
         }
 
-        client.user.setActivity('Die Stämme DE', {
-            type: ActivityType.Playing
+        client.user.setPresence({
+            activities: [{ name: `Die Stämme DE`, type: ActivityType.Playing }],
+            status: 'dnd',
         });
 
         let allSlashCommands = 0;
