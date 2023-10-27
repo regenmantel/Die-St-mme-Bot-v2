@@ -1,34 +1,7 @@
-const {
-    Client,
-    GatewayIntentBits,
-    Partials,
-    ChannelType,
-    PermissionsBitField
-} = require("discord.js");
-const credentialManager = require("../Credentials/Config");
 const config = require("../Credentials/Config");
 const {conn} = require("../functions/conn");
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.MessageContent, // Only for bots with message content intent access.
-        GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildInvites,
-    ],
-    partials: [Partials.Message, Partials.Channel, Partials.Reaction]
-});
-
-client.login(credentialManager.client.token);
-
-client.on("ready", async () => {
+const sendBirthdayWishes = async function sendBirthdayWishes(client) {
     let birthdayChannel = client.channels.cache.find(channel => channel.id === config.server.channels.birthdayChannelId);
     const birthdays = await conn('SELECT birthday, discordUserId FROM `users` WHERE birthday > 0');
 
@@ -66,10 +39,9 @@ client.on("ready", async () => {
         }
     }
 
-    await delay(30000);
-    process.exit()
-})
-
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
+    return new Promise(resolve => {
+        resolve();
+    })
 }
+
+exports.sendBirthdayWishes = sendBirthdayWishes;

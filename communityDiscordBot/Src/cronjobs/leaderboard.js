@@ -1,35 +1,10 @@
 const {
-    inlineCode,
-    Client,
-    GatewayIntentBits,
-    Partials,
-    ChannelType,
-    PermissionsBitField
+    inlineCode
 } = require("discord.js");
-const credentialManager = require("../Credentials/Config");
 const config = require("../Credentials/Config");
 const {conn} = require("../functions/conn");
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.MessageContent, // Only for bots with message content intent access.
-        GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildInvites,
-    ],
-    partials: [Partials.Message, Partials.Channel, Partials.Reaction]
-});
-
-client.login(credentialManager.client.token);
-
-client.on("ready", async () => {
+const createLeaderboard = async function createLeaderboard(client) {
     const rankEmoji = [':first_place:', ':second_place:', ':third_place:'];
 
     let leaderBoardReactions = await conn("SELECT discordUserId,reactionsReceived FROM `users` ORDER by reactionsReceived DESC LIMIT 3;");
@@ -50,14 +25,14 @@ client.on("ready", async () => {
             let reactionPerson = (client.users.cache.get(element["discordUserId"])) ? client.users.cache.get(element["discordUserId"]).username : "Unbekannt"
             let reactions = element["reactionsReceived"];
             fieldArray.push({
-                name: `${rankEmoji[i-1]} Rang ` + i,
+                name: `${rankEmoji[i - 1]} Rang ` + i,
                 value: `${inlineCode(reactionPerson)} mit ${inlineCode(reactions)} Reactions.`,
                 inline: true,
             });
             i++;
         });
 
-        for(let space = 1; space <= 2; space++) {
+        for (let space = 1; space <= 2; space++) {
             fieldArray.push({
                 name: ` `,
                 value: ` `
@@ -69,14 +44,14 @@ client.on("ready", async () => {
             let reactionPerson = (client.users.cache.get(element["discordUserId"])) ? client.users.cache.get(element["discordUserId"]).username : "Unbekannt"
             let reactions = element["messagesSent"];
             fieldArray.push({
-                name: `${rankEmoji[i-1]} Rang ` + i,
+                name: `${rankEmoji[i - 1]} Rang ` + i,
                 value: `${inlineCode(reactionPerson)} mit ${inlineCode(reactions)} Nachrichten.`,
                 inline: true,
             });
             i++;
         });
 
-        for(let space = 1; space <= 2; space++) {
+        for (let space = 1; space <= 2; space++) {
             fieldArray.push({
                 name: ` `,
                 value: ` `
@@ -88,14 +63,14 @@ client.on("ready", async () => {
             let reactionPerson = (client.users.cache.get(element["discordUserId"])) ? client.users.cache.get(element["discordUserId"]).username : "Unbekannt"
             let quizRightAnswer = element["quizRightAnswer"];
             fieldArray.push({
-                name: `${rankEmoji[i-1]} Rang ` + i,
+                name: `${rankEmoji[i - 1]} Rang ` + i,
                 value: `${inlineCode(reactionPerson)} mit ${inlineCode(quizRightAnswer)} richtig beantworteten Fragen.`,
                 inline: true,
             });
             i++;
         });
 
-        for(let space = 1; space <= 2; space++) {
+        for (let space = 1; space <= 2; space++) {
             fieldArray.push({
                 name: ` `,
                 value: ` `
@@ -105,7 +80,7 @@ client.on("ready", async () => {
         i = 1;
         leaderBoardReactionMessage.forEach((element) => {
             fieldArray.push({
-                name: `${rankEmoji[i-1]} Rang ` + i,
+                name: `${rankEmoji[i - 1]} Rang ` + i,
                 value: `${discordLink}/${element["channelId"]}/${element["messageId"]} mit ${inlineCode(element["amount"])} Reaktionen.`,
                 inline: true,
             });
@@ -125,12 +100,11 @@ client.on("ready", async () => {
         await leaderBoardChannel.send({
             embeds: [leaderBoardReactionsEmbed]
         });
+
+        return new Promise(resolve => {
+            resolve();
+        })
     }
-
-    await delay(30000);
-    process.exit()
-})
-
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
 }
+
+exports.createLeaderboard = createLeaderboard;

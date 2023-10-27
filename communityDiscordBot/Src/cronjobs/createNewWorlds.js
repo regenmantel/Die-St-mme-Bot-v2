@@ -1,35 +1,12 @@
 const {
-    Client,
-    GatewayIntentBits,
-    Partials,
     ChannelType,
     PermissionsBitField
 } = require("discord.js");
-const credentialManager = require("../Credentials/Config");
 const https = require("https");
 const config = require("../Credentials/Config");
 const {dbBotConn} = require("../functions/DBBotConn");
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.MessageContent, // Only for bots with message content intent access.
-        GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildInvites,
-    ],
-    partials: [Partials.Message, Partials.Channel, Partials.Reaction]
-});
-
-client.login(credentialManager.client.token);
-
-client.on("ready", async () => {
+const createWorlds = async function createWorlds(client) {
     const url = config.innoGames.urls.getServerUrl;
     const guild = client.guilds.cache.get(config.server.serverId);
 
@@ -136,11 +113,11 @@ client.on("ready", async () => {
                 }
             });
         });
-        await delay(30000);
-        process.exit()
     });
-})
 
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
+    return new Promise(resolve => {
+        resolve();
+    })
 }
+
+exports.createWorlds = createWorlds;

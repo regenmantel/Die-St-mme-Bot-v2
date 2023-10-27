@@ -1,42 +1,9 @@
-const {
-    Client,
-    GatewayIntentBits,
-    Partials,
-    ChannelType,
-    PermissionsBitField,
-    EmbedBuilder,
-    roleMention
-} = require("discord.js");
-
-const credentialManager = require("../Credentials/Config");
-const https = require("https");
 const config = require("../Credentials/Config");
-const {dbBotConn} = require("../functions/DBBotConn");
 const fs = require("fs");
 const path = require("path");
 const request = require("request");
-const jsdom = require("jsdom");
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.MessageContent, // Only for bots with message content intent access.
-        GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildInvites,
-    ],
-    partials: [Partials.Message, Partials.Channel, Partials.Reaction]
-});
-
-client.login(credentialManager.client.token);
-
-client.on("ready", async () => {
+const catchForumInformations = async function catchForumInformations(client) {
     const guild = client.guilds.cache.get(config.server.serverId);
     const eventRole = config.server.roles.eventRole;
     const newsRole = config.server.roles.newsRole;
@@ -366,8 +333,10 @@ client.on("ready", async () => {
             }
         })
     });
-})
 
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
+    return new Promise(resolve => {
+        resolve();
+    })
 }
+
+exports.catchForumInformations = catchForumInformations;

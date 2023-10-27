@@ -1,8 +1,7 @@
 const {conn} = require("../functions/conn");
 const config = require("../Credentials/Config");
-
-const {ActivityType} = require("discord.js");
 let imgURL = "https://diestaemmedb.de/discord/banned.png";
+const {createLeaderboard} = require("../cronjobs/leaderboard");
 module.exports = {
     name: "ready",
     runOnce: true,
@@ -73,7 +72,6 @@ module.exports = {
                                 }
                             }
                         }
-
                     }
                 }
             }
