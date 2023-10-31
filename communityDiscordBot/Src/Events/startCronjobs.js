@@ -17,11 +17,9 @@ module.exports = {
             let seconds = new Date().getSeconds();
 
             if (hour == "08" && minute == "00" && seconds == "00") {
-                await createLeaderboard(client)
-                await catchForumInformations(client)
-                await createWorlds(client)
                 await sendBirthdayWishes(client)
-            } else if (minute == "00" && seconds == "00") {
+            }
+            if (minute == "00" && seconds == "00") {
                 await createLeaderboard(client)
                 await catchForumInformations(client)
                 await createWorlds(client)
