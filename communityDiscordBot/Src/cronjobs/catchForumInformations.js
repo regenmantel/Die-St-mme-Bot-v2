@@ -2,6 +2,7 @@ const config = require("../Credentials/Config");
 const fs = require("fs");
 const path = require("path");
 const request = require("request");
+const {EmbedBuilder,roleMention} = require("discord.js");
 
 const catchForumInformations = async function catchForumInformations(client) {
     const guild = client.guilds.cache.get(config.server.serverId);
