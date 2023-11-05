@@ -106,7 +106,7 @@ module.exports = {
                 await channel.messages.fetch(messageID)
                     .then(async (message) => {
                         messageUser = message.content;
-                        if (message.attachments.length) {
+                        if (message.attachments.size) {
                             messageUser += "\nAnhang:";
                             message.attachments.forEach((attachment) => {
                                 messageUser += `\n${attachment.url}`

@@ -42,7 +42,7 @@ module.exports = {
         } else {
             user = await client.users.fetch(message.author.id, false);
             messageContent = message.content;
-            if(message.attachments.length){
+            if(message.attachments.size){
                 messageContent += "\nAnhang:";
                 message.attachments.forEach((attachment)=>{
                     messageContent += `\n${attachment.url}`

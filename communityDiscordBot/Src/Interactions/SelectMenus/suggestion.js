@@ -46,7 +46,7 @@ module.exports = {
             guildUser = await interaction.guild.members.cache.get(message.author.id)
             user = message.author
             messageContent = message.content;
-            if (message.attachments) {
+            if (message.attachments.size) {
                 messageContent += `\n Anhang:`
                 message.attachments.forEach((attachment) => {
                     messageContent += `\n${attachment.url}`
