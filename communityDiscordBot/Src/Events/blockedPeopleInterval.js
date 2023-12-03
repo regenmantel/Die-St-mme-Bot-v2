@@ -20,7 +20,9 @@ module.exports = {
             let currentTime = Math.round(Date.now() / 1000);
             blockedPeople = await conn("SELECT SUM(warningPoints) AS sumWarningPoints, discordUserID FROM `warningPoints` WHERE expiryDate > ? GROUP BY discordUserID;", [currentTime]);
             if (blockedPeople.length) {
+                await conn("UPDATE `users` SET warningPoints = 0;");
                 for (const element of blockedPeople) {
+                    await conn("UPDATE `users` SET warningPoints = ? WHERE discordUserID = ?", [element["sumWarningPoints"],element["discordUserID"]]);
                     if (element["sumWarningPoints"] >= 10) {
                         blockedPeopleArray.push(element["discordUserID"]);
                         let blockedMember = await guild.members.cache.get(element["discordUserID"]);
