@@ -66,7 +66,7 @@ module.exports = {
                     .then(async (message) => {
                         realMessage = true;
                         let messageContent = message.content;
-                        if (message.attachments.length) {
+                        if (message.attachments.size) {
                             messageContent += "\nAnhang:";
                             message.attachments.forEach((attachment) => {
                                 messageContent += `\n${attachment.url}`
