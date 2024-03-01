@@ -10,6 +10,7 @@ const catchForumInformations = async function catchForumInformations(client) {
 	const newsRole = config.server.roles.newsRole;
 	const updateRole = config.server.roles.updateRole;
 	const newWorldRole = config.server.roles.newWorldRole;
+	const file = new AttachmentBuilder('dsBanner.png');
 
 	let events = fs.readFileSync(path.resolve(__dirname, '../assets/list/eventfile.txt'), 'utf8').toString().split('\n');
 	events = events.map((string) => string.replaceAll('\r', ''));
@@ -41,8 +42,11 @@ const catchForumInformations = async function catchForumInformations(client) {
 								eventInfos = eventInfos.replaceAll('\n', '');
 								eventInfos = eventInfos.replaceAll('  ', ' ');
 
-								let eventStartReg = /Eventstart\D+(?<day>\d+)\W+(?<month>\d+|\w+)\W+(?<year>\d+)\D+(?<time>\d+\W\d+)/g;
+								/*let eventStartReg = /Eventstart\D+(?<day>\d+)\W+(?<month>\d+|\w+)\W+(?<year>\d+)\D+(?<time>\d+\W\d+)/g;
 								let eventEndReg = /Eventende\D+(?<day>\d+)\W+(?<month>\d+|\w+)\W+(?<year>\d+)\D+(?<time>\d+\W\d+)/g;
+								let eventWorldsReg = /Eventbeschreibung\:\s+(?<eventName>.+)Teilnehmende\sSpielwelten\:\s+(?<eventWorlds>.+)(Wir)/g;*/
+								let eventStartReg = /Eventstart\:\s+\w+\W+(?<day>\d+)\W+(?<month>\w+)\s+(?<year>\d+)\s+\w+\s+(?<time>\d+\W\d+)/g;
+								let eventEndReg = /Eventende\:\s+\w+\W+(?<day>\d+)\W+(?<month>\w+)\s+(?<year>\d+)\s+\w+\s+(?<time>\d+\W\d+)/g;
 								let eventWorldsReg = /Eventbeschreibung\:\s+(?<eventName>.+)Teilnehmende\sSpielwelten\:\s+(?<eventWorlds>.+)(Wir)/g;
 								let match, eventStartDay, eventStartMonth, eventStartYear, eventStartTime;
 								let eventEndDay, eventEndMonth, eventEndYear, eventEndTime;
@@ -69,12 +73,12 @@ const catchForumInformations = async function catchForumInformations(client) {
 
 								if (eventStartDay !== undefined && eventEndDay !== undefined && eventWorlds !== undefined) {
 									const eventEmbed = new EmbedBuilder()
-										.setTitle(`Neues Event startet!`)
+										.setTitle(`Es startet schon bald ein neues Event!`)
 										.setAuthor({
 											name: `Die Stämme Events`,
 											iconURL: `${guild.iconURL()}`,
-											url: 'https://forum.die-staemme.de' + href,
 										})
+										.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 										.setURL('https://forum.die-staemme.de' + href)
 										.addFields(
 											{
@@ -84,12 +88,12 @@ const catchForumInformations = async function catchForumInformations(client) {
 											},
 											{
 												name: 'Eventstart:',
-												value: `${eventStartDay}.${eventStartMonth}.${eventStartYear} ${eventStartTime}`,
+												value: `${eventStartDay} ${eventStartMonth} ${eventStartYear}, ${eventStartTime}`,
 												inline: false,
 											},
 											{
 												name: 'Eventende:',
-												value: `${eventEndDay}.${eventEndMonth}.${eventEndYear} ${eventEndTime}`,
+												value: `${eventEndDay} ${eventEndMonth} ${eventEndYear}, ${eventEndTime}`,
 												inline: false,
 											},
 											{
@@ -99,26 +103,28 @@ const catchForumInformations = async function catchForumInformations(client) {
 											},
 										)
 										.setColor(0xed3d7d)
-										.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+										.setImage('attachment://dsBanner.png');
 									await eventChannel.send({
-										content: `${roleMention(eventRole)} Ein neues Event startet bald. Hier findet ihr die Infos. 🎆`,
+										content: `${roleMention(eventRole)}\n\n🎆 Ein neues Event startet bald. Hier findet ihr die Infos. 🎆`,
 										embeds: [eventEmbed],
+										files: [file],
 									});
 								} else {
 									const eventEmbed = new EmbedBuilder()
-										.setTitle(`Neues Event startet!`)
+										.setTitle(`Es startet schon bald ein neues Event!`)
 										.setAuthor({
 											name: `Die Stämme Events`,
 											iconURL: `${guild.iconURL()}`,
-											url: 'https://forum.die-staemme.de' + href,
 										})
+										.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 										.setURL('https://forum.die-staemme.de' + href)
 										.addFields({ name: 'Eventname:', value: value, inline: false })
 										.setColor(0xed3d7d)
-										.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+										.setImage('attachment://dsBanner.png');
 									await eventChannel.send({
-										content: `${roleMention(eventRole)} Ein neues Event startet bald. Hier findet ihr die Infos. 🎆`,
+										content: `${roleMention(eventRole)}\n\n🎆 Ein neues Event startet bald. Hier findet ihr die Infos. 🎆`,
 										embeds: [eventEmbed],
+										files: [file],
 									});
 								}
 							});
@@ -131,12 +137,12 @@ const catchForumInformations = async function catchForumInformations(client) {
 				if (!events.includes(href)) {
 					fs.appendFile(path.resolve(path.resolve(__dirname, '../assets/list/eventfile.txt')), '\n' + href, async (err) => {
 						const newsEmbed = new EmbedBuilder()
-							.setTitle(`Neue Ankündigung!`)
+							.setTitle(`Eine allgemeine Ankündigung ist im Forum!`)
 							.setAuthor({
 								name: `Die Stämme Ankündigung`,
 								iconURL: `${guild.iconURL()}`,
-								url: 'https://forum.die-staemme.de' + href,
 							})
+							.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 							.setURL('https://forum.die-staemme.de' + href)
 							.addFields({
 								name: 'Ankündigung:',
@@ -144,10 +150,11 @@ const catchForumInformations = async function catchForumInformations(client) {
 								inline: false,
 							})
 							.setColor(0xed3d7d)
-							.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+							.setImage('attachment://dsBanner.png');
 						await newsChannel.send({
-							content: `${roleMention(newsRole)} Ein neue Ankündigung wurde angekündigt. Hier findet ihr die Infos. 🎆`,
+							content: `${roleMention(newsRole)}\n\n📜 Ein neue Ankündigung ist im Forum. Hier findet ihr die Infos. 📜`,
 							embeds: [newsEmbed],
+							files: [file],
 						});
 					});
 				}
@@ -170,19 +177,20 @@ const catchForumInformations = async function catchForumInformations(client) {
 					fs.appendFile(path.resolve(path.resolve(__dirname, '../assets/list/eventfile.txt')), '\n' + href, async (err) => {
 						if (!err) {
 							const eventEmbed = new EmbedBuilder()
-								.setTitle(`Neues Update!`)
+								.setTitle(`Es kommt demnächst eine neues Update!`)
 								.setAuthor({
 									name: `Die Stämme Update`,
 									iconURL: `${guild.iconURL()}`,
-									url: 'https://forum.die-staemme.de' + href,
 								})
+								.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 								.setURL('https://forum.die-staemme.de' + href)
 								.addFields({ name: 'Update:', value: value, inline: false })
 								.setColor(0xed3d7d)
-								.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+								.setImage('attachment://dsBanner.png');
 							await updateChannel.send({
-								content: `${roleMention(updateRole)} Ein neues Update kommt bald. Hier findet ihr die Infos. 🎆`,
+								content: `${roleMention(updateRole)}\n\n🎲 Ein neues Update kommt bald. Hier findet ihr die Infos. 🎲`,
 								embeds: [eventEmbed],
+								files: [file],
 							});
 						}
 					});
@@ -193,19 +201,20 @@ const catchForumInformations = async function catchForumInformations(client) {
 				if (!events.includes(href)) {
 					fs.appendFile(path.resolve(path.resolve(__dirname, '../assets/list/eventfile.txt')), '\n' + href, async (err) => {
 						const eventEmbed = new EmbedBuilder()
-							.setTitle(`Neues Update!`)
+							.setTitle(`Es kommt demnächst eine neues Update!`)
 							.setAuthor({
 								name: `Die Stämme Update`,
 								iconURL: `${guild.iconURL()}`,
-								url: 'https://forum.die-staemme.de' + href,
 							})
+							.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 							.setURL('https://forum.die-staemme.de' + href)
 							.addFields({ name: 'Update:', value: value, inline: false })
 							.setColor(0xed3d7d)
-							.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+							.setImage('attachment://dsBanner.png');
 						await updateChannel.send({
-							content: `${roleMention(updateRole)} Ein neues Update kommt bald. Hier findet ihr die Infos. 🎆`,
+							content: `${roleMention(updateRole)}\n\n🎲 Ein neues Update kommt bald. Hier findet ihr die Infos. 🎲`,
 							embeds: [eventEmbed],
+							files: [file],
 						});
 					});
 				}
@@ -247,12 +256,12 @@ const catchForumInformations = async function catchForumInformations(client) {
 
 								if (eventStartDay !== undefined) {
 									const eventEmbed = new EmbedBuilder()
-										.setTitle(`Neue Welt startet!`)
+										.setTitle(`Es starten schon bald neue Welten!`)
 										.setAuthor({
 											name: `Die Stämme Welten`,
 											iconURL: `${guild.iconURL()}`,
-											url: 'https://forum.die-staemme.de' + href,
 										})
+										.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 										.setURL('https://forum.die-staemme.de' + href)
 										.addFields(
 											{
@@ -262,31 +271,33 @@ const catchForumInformations = async function catchForumInformations(client) {
 											},
 											{
 												name: 'Weltenstart:',
-												value: `${eventStartDay}.${eventStartMonth}.${eventStartYear} ${eventStartTime}`,
+												value: `${eventStartDay}.${eventStartMonth}.${eventStartYear}, ${eventStartTime} Uhr`,
 												inline: false,
 											},
 										)
 										.setColor(0xed3d7d)
-										.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+										.setImage('attachment://dsBanner.png');
 									await newWorldChannel.send({
-										content: `${roleMention(newWorldRole)} Eine neue Welt startet bald. Hier findet ihr die Infos. 🎆`,
+										content: `${roleMention(newWorldRole)}\n\n🌍 Eine neue Welt startet bald. Hier findet ihr die Infos. 🌍`,
 										embeds: [eventEmbed],
+										files: [file],
 									});
 								} else {
 									const eventEmbed = new EmbedBuilder()
-										.setTitle(`Neue Welt startet!`)
+										.setTitle(`Es starten schon bald neue Welten!`)
 										.setAuthor({
 											name: `Die Stämme Welten`,
 											iconURL: `${guild.iconURL()}`,
-											url: 'https://forum.die-staemme.de' + href,
 										})
+										.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 										.setURL('https://forum.die-staemme.de' + href)
 										.addFields({ name: 'Welten:', value: value, inline: false })
 										.setColor(0xed3d7d)
-										.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+										.setImage('attachment://dsBanner.png');
 									await newWorldChannel.send({
-										content: `${roleMention(newWorldRole)} Eine neue Welt startet bald. Hier findet ihr die Infos. 🎆`,
+										content: `${roleMention(newWorldRole)}\n\n🌍 Eine neue Welt startet bald. Hier findet ihr die Infos. 🌍`,
 										embeds: [eventEmbed],
+										files: [file],
 									});
 								}
 							});
@@ -299,12 +310,12 @@ const catchForumInformations = async function catchForumInformations(client) {
 				if (!events.includes(href)) {
 					fs.appendFile(path.resolve(path.resolve(__dirname, '../assets/list/eventfile.txt')), '\n' + href, async (err) => {
 						const newsEmbed = new EmbedBuilder()
-							.setTitle(`Neue Sonderwelt!`)
+							.setTitle(`Es startet demnächst eine neue Sonderwelt!`)
 							.setAuthor({
 								name: `Die Stämme Welten`,
 								iconURL: `${guild.iconURL()}`,
-								url: 'https://forum.die-staemme.de' + href,
 							})
+							.setThumbnail('https://dsde.innogamescdn.com/asset/525cce89/graphic/start/favicon/favicon-32x32.png')
 							.setURL('https://forum.die-staemme.de' + href)
 							.addFields({
 								name: 'Sonderwelt:',
@@ -312,10 +323,11 @@ const catchForumInformations = async function catchForumInformations(client) {
 								inline: false,
 							})
 							.setColor(0xed3d7d)
-							.setImage('https://forum.die-staemme.de/styles/game/logo.png');
+							.setImage('attachment://dsBanner.png');
 						await newWorldChannel.send({
-							content: `${roleMention(newWorldRole)} Eine neue Welt startet bald. Hier findet ihr die Infos. 🎆`,
+							content: `${roleMention(newWorldRole)}🌍 Eine neue Welt startet bald. Hier findet ihr die Infos. 🌍`,
 							embeds: [newsEmbed],
+							files: [file],
 						});
 					});
 				}
