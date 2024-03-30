@@ -2,7 +2,7 @@ const config = require('../Credentials/Config');
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
-const { EmbedBuilder, roleMention } = require('discord.js');
+const { EmbedBuilder, roleMention, AttachmentBuilder } = require('discord.js');
 
 const catchForumInformations = async function catchForumInformations(client) {
 	const guild = client.guilds.cache.get(config.server.serverId);
@@ -45,12 +45,13 @@ const catchForumInformations = async function catchForumInformations(client) {
 								/*let eventStartReg = /Eventstart\D+(?<day>\d+)\W+(?<month>\d+|\w+)\W+(?<year>\d+)\D+(?<time>\d+\W\d+)/g;
 								let eventEndReg = /Eventende\D+(?<day>\d+)\W+(?<month>\d+|\w+)\W+(?<year>\d+)\D+(?<time>\d+\W\d+)/g;
 								let eventWorldsReg = /Eventbeschreibung\:\s+(?<eventName>.+)Teilnehmende\sSpielwelten\:\s+(?<eventWorlds>.+)(Wir)/g;*/
-								let eventStartReg = /Eventstart\:\s+\w+\W+(?<day>\d+)\W+(?<month>\w+)\s+(?<year>\d+)\s+\w+\s+(?<time>\d+\W\d+)/g;
-								let eventEndReg = /Eventende\:\s+\w+\W+(?<day>\d+)\W+(?<month>\w+)\s+(?<year>\d+)\s+\w+\s+(?<time>\d+\W\d+)/g;
-								let eventWorldsReg = /Eventbeschreibung\:\s+(?<eventName>.+)Teilnehmende\sSpielwelten\:\s+(?<eventWorlds>.+)(Wir)/g;
+								let eventStartReg = /Eventstart\:\s+\w+\W+(?<day>\d+)\W+(?<month>\S+)\s+(?<year>\d+)\s+\w+\s+(?<time>\d+\W\d+)/g;
+								let eventEndReg = /Eventende\:\s+\w+\W+(?<day>\d+)\W+(?<month>\S+)\s+(?<year>\d+)\s+\w+\s+(?<time>\d+\W\d+)/g;
+								let eventNameReg = /Eventbeschreibung\:\s*(?<eventName>.+)Teilnehmende\sSpielwelten\:\s+(?<eventWorlds>.+)(Wir)/g;
 								let match, eventStartDay, eventStartMonth, eventStartYear, eventStartTime;
 								let eventEndDay, eventEndMonth, eventEndYear, eventEndTime;
-								let eventWorlds, eventName;
+								let eventWorlds = '';
+								let eventName = '';
 
 								while ((match = eventStartReg.exec(eventInfos))) {
 									eventStartDay = match.groups['day'];
@@ -66,9 +67,9 @@ const catchForumInformations = async function catchForumInformations(client) {
 									eventEndTime = match.groups['time'];
 								}
 
-								while ((match = eventWorldsReg.exec(eventInfos))) {
-									eventWorlds = match.groups['eventWorlds'];
+								while ((match = eventNameReg.exec(eventInfos))) {
 									eventName = match.groups['eventName'];
+									eventWorlds = match.groups['eventWorlds'];
 								}
 
 								if (eventStartDay !== undefined && eventEndDay !== undefined && eventWorlds !== undefined) {
@@ -88,12 +89,12 @@ const catchForumInformations = async function catchForumInformations(client) {
 											},
 											{
 												name: 'Eventstart:',
-												value: `${eventStartDay} ${eventStartMonth} ${eventStartYear}, ${eventStartTime}`,
+												value: `${eventStartDay}. ${eventStartMonth} ${eventStartYear}, ${eventStartTime}`,
 												inline: false,
 											},
 											{
 												name: 'Eventende:',
-												value: `${eventEndDay} ${eventEndMonth} ${eventEndYear}, ${eventEndTime}`,
+												value: `${eventEndDay}. ${eventEndMonth} ${eventEndYear}, ${eventEndTime}`,
 												inline: false,
 											},
 											{
